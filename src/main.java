@@ -1,3 +1,5 @@
+package src;
+
 import com.jcraft.jsch.*;
 
 import java.sql.Connection;
@@ -5,17 +7,16 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class PostgresSSH {
+public class main {
 
     public static void main(String[] args) throws SQLException {
 
         int lport = 5432;
         String rhost = "starbug.cs.rit.edu";
         int rport = 5432;
-        String user = "YOUR_CS_USERNAME"; //change to your username
-        String password = "YOUR_CS_PASSWORD"; //change to your password
+        String user = "rml6334"; //change to your username
+        String password = "RaCh1678678351"; //change to your password
         String databaseName = "p320_30"; //change to your database name
-
         String driverName = "org.postgresql.Driver";
         Connection conn = null;
         Session session = null;
