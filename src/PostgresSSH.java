@@ -12,7 +12,7 @@ public class PostgresSSH {
         int lport = 5432;
         String rhost = "starbug.cs.rit.edu";
         int rport = 5432;
-        String user = "user"; //change to your username
+        String user = "entity.user"; //change to your username
         String password = "password"; //change to your password
         String databaseName = "p320_30"; //change to your database name
 
@@ -37,7 +37,7 @@ public class PostgresSSH {
 
             System.out.println("database Url: " + url);
             Properties props = new Properties();
-            props.put("user", user);
+            props.put("entity.user", user);
             props.put("password", password);
 
             Class.forName(driverName);
