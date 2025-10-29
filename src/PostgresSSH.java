@@ -1,9 +1,15 @@
 import com.jcraft.jsch.*;
+import org.ini4j.Ini;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class PostgresSSH {
 
@@ -12,8 +18,15 @@ public class PostgresSSH {
         int lport = 5432;
         String rhost = "starbug.cs.rit.edu";
         int rport = 5432;
-        String user = "entity.user"; //change to your username
-        String password = "password"; //change to your password
+        String user;
+        String password;
+        try{
+            Ini ini = new Ini(new File("dbInfo.ini"));
+            user = ini.get("Database", "username");
+            password = ini.get("Database", "password");
+        } catch(IOException e) {
+            return;
+        }
         String databaseName = "p320_30"; //change to your database name
 
         String driverName = "org.postgresql.Driver";
@@ -37,14 +50,32 @@ public class PostgresSSH {
 
             System.out.println("database Url: " + url);
             Properties props = new Properties();
-            props.put("entity.user", user);
+            props.put("user", user);
             props.put("password", password);
 
             Class.forName(driverName);
             conn = DriverManager.getConnection(url, props);
             System.out.println("Database connection established");
 
-            // Do something with the database....
+            // temp: figuring out how to actually query db
+            Scanner in = new Scanner(System.in);
+            System.out.print("Enter username: ");
+            String uname = in.nextLine();
+            System.out.println("Hello, " + uname);
+            try(Statement smt = conn.createStatement()) {
+                ResultSet res = smt.executeQuery("select * from users where username='" + uname +"'");
+                while(res.next()){
+                    System.out.println(res.getString("first_name"));
+                    System.out.println(res.getString("last_name"));
+                    System.out.println(res.getString("creation_date"));
+                    System.out.println(res.getString("email_address"));
+                    System.out.println(res.getString("last_access_date"));
+                }
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
