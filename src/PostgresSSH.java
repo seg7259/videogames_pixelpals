@@ -21,7 +21,7 @@ public class PostgresSSH {
         String user;
         String password;
         try{
-            Ini ini = new Ini(new File("dbInfo.ini"));
+            Ini ini = new Ini(new File("DBUser/dbInfo.ini"));
             user = ini.get("Database", "username");
             password = ini.get("Database", "password");
         } catch(IOException e) {
