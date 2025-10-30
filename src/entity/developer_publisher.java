@@ -2,7 +2,7 @@ package entity;
 
 public class developer_publisher {
 
-    /** developer/publisher id */
+    /** developer/publisher id, auto increment */
     private int devid;
 
     /** developer.publisher name */
@@ -10,11 +10,9 @@ public class developer_publisher {
 
     /**
      * Developer/publisher object.
-     * @param devid ^
      * @param name ^
      */
-    public  developer_publisher(int devid, String name) {
-        this.devid = devid;
+    public  developer_publisher( String name) {
         this.name = name;
     }
 
@@ -24,6 +22,14 @@ public class developer_publisher {
      */
     public int getDevid() {
         return devid;
+    }
+
+    /**
+     * Set the devid to the value from the data base.
+     * @param devid the auto increment devid value
+     */
+    public void setDevid(int devid) {
+        this.devid = devid;
     }
 
     /**

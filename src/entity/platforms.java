@@ -10,11 +10,9 @@ public class platforms {
 
     /**
      * Platform/s object.
-     * @param pid <-
      * @param name <-
      */
-    public platforms(int pid, String name) {
-        this.pid = pid;
+    public platforms(String name) {
         this.name = name;
 
     }
@@ -27,6 +25,13 @@ public class platforms {
         return pid;
     }
 
+    /**
+     * Set the id to the database id.
+     * @param pid the id to the one from the database
+     */
+    public void setPid(int pid) {
+        this.pid = pid;
+    }
 
     /**
      * Get platform name.

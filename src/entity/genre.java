@@ -2,7 +2,7 @@ package entity;
 
 public class genre {
 
-    /** genre id */
+    /** genre id, auto increment value */
     private int gid;
 
     /** genre name */
@@ -11,11 +11,9 @@ public class genre {
 
     /**
      * Genre object/entity.
-     * @param gid genre id
      * @param name genre name
      */
-    public genre(int gid, String name) {
-        this.gid = gid;
+    public genre(String name) {
         this.name = name;
     }
 
@@ -25,6 +23,14 @@ public class genre {
      */
     public int getGid() {
         return gid;
+    }
+
+    /**
+     * Set the genre id to the one from the database.
+     * @param gid genre id to get from database
+     */
+    public void setGid(int gid) {
+        this.gid = gid;
     }
 
     /**
