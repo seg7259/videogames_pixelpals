@@ -82,7 +82,7 @@ public class SearchController {
                     }
                     game te;
                     List<develops> devids = new LinkedList<>();
-                    for (develops d : devids) {
+                    for (developer_publisher d : ds) {
                         res3 = smt.executeQuery("select * from develops where devid=" + d.getDevid());
                         while (res3.next()) {
                             devids.add(new develops(Integer.parseInt(res3.getString("devid")), Integer.parseInt(res3.getString("gaid"))));

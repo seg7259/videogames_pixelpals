@@ -60,8 +60,7 @@ public class PostgresSSH {
             System.out.println("Database connection established");
 
             SearchController search = new SearchController();
-            user u = new user("Bella", null, null, null, null, null);
-            u.setUid(1);
+            user u = new user(1,"Bella", null, null, null, null, null);
             search.searchGame(conn, u);
             LoginController log = new LoginController();
             log.login(conn);
