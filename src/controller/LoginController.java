@@ -43,7 +43,7 @@ public class LoginController {
                     password = in.nextLine();
                     if(userPassword.equals(password)){
                         System.out.println("Correct password");
-                        userr = new user(first_name, last_name, creation_date, email_address, userName, userPassword);
+                        userr = new user(uid, first_name, last_name, creation_date, email_address, userName, userPassword);
                     }
                     else{
                         System.out.println("Incorrect password");

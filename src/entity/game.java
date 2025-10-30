@@ -13,10 +13,22 @@ public class game {
 
     /**
      * Game object
+     * @param gaid game id
      * @param name game name
      * @param esrb_rating esrb rating of game
      */
-    public game( String name, String esrb_rating) {
+    public game(int gaid, String name, String esrb_rating) {
+        this.gaid = gaid;
+        this.name = name;
+        this.esrb_rating = esrb_rating;
+    }
+
+    /**
+     * Game object
+     * @param name game name
+     * @param esrb_rating esrb rating of game
+     */
+    public game(String name, String esrb_rating) {
         this.name = name;
         this.esrb_rating = esrb_rating;
     }

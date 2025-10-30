@@ -32,14 +32,14 @@ public class user {
      * @param username <-
      * @param password users password
      */
-    public user(String first_name, String last_name, String creation_date, String email_address, String username, String password) {
+    public user(int uid, String first_name, String last_name, String creation_date, String email_address, String username, String password) {
+        this.uid = uid;
         this.first_name = first_name;
         this.last_name = last_name;
         this.creation_date = creation_date;
         this.email_address = email_address;
         this.username = username;
         this.password = password;
-
     }
 
 
