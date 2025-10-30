@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.Properties;
 import java.util.Scanner;
+import controller.*;
 
 public class PostgresSSH {
 
@@ -57,7 +58,7 @@ public class PostgresSSH {
             conn = DriverManager.getConnection(url, props.getProperty("user"), props.getProperty("password"));
             System.out.println("Database connection established");
 
-            Login log = new Login();
+            LoginController log = new LoginController();
             log.login(conn);
 
 

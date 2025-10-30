@@ -1,13 +1,15 @@
+package controller;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-public class Login {
+public class LoginController {
     String errorMsg;
 
-    public Login(){
+    public LoginController(){
         errorMsg = "Login Failed";
 
     }
