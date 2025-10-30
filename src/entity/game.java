@@ -9,14 +9,14 @@ public class game {
     private String name;
 
     /** esrb rating of game */
-    private char esrb_rating;
+    private String esrb_rating;
 
     /**
      * Game object
      * @param name game name
      * @param esrb_rating esrb rating of game
      */
-    public game( String name, char esrb_rating) {
+    public game( String name, String esrb_rating) {
         this.name = name;
         this.esrb_rating = esrb_rating;
     }
@@ -34,7 +34,7 @@ public class game {
      * Get game esrb rating.
      * @return game esrb rating
      */
-    public char getEsrb_rating() {
+    public String getEsrb_rating() {
         return esrb_rating;
     }
 
