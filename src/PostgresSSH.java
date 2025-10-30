@@ -61,11 +61,6 @@ public class PostgresSSH {
             LoginController log = new LoginController();
             log.login(conn);
 
-            CollectionController col =  new CollectionController();
-//            col.createCollection(conn, 1);
-            col.viewAllCollections(conn, 1);
-            col.deleteGameFromCollection(conn, 1);
-
 
         } catch (Exception e) {
             e.printStackTrace();
