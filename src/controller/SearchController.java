@@ -98,7 +98,26 @@ public class SearchController {
                     }
                     break;
                 case 5:
-                    //insert
+                    System.out.println("Enter game's price: ");
+                    String gamePrice = in.nextLine();
+                    List<game_runs_on> p = new LinkedList<>();
+                    game_runs_on temp4 = null;
+                    res2 = smt.executeQuery("select * from game_runs_on where price=" + gamePrice);
+                    while(res2.next()){
+                        temp4 = new game_runs_on(Integer.parseInt(res2.getString("pid")), Integer.parseInt(res2.getString("gaid")), res2.getString("release_date"), Integer.parseInt(res2.getString("price")));
+                        p.add(temp4);
+                    }
+                    game tem;
+
+                    for (game_runs_on gaid : p) {
+                        res4 = smt.executeQuery("select * from game where gaid=" + gaid.getGaid());
+                        while (res4.next()) {
+                            tem = new game(res4.getString("name"), res4.getString("esrb_rating"));
+                            tem.setGaid(Integer.parseInt(res4.getString("gaid")));
+                            games.add(tem);
+                        }
+                    }
+
                     break;
                 default:
                     //res = smt.executeQuery("select * from game where name like '" + gameName + "%'");
