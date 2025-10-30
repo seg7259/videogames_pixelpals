@@ -19,19 +19,11 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/jsch-0.1.55.jar!/" />
+          <root url="file://$USER_HOME$/Downloads/JavaPostgresSSHJars" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/postgresql-42.2.24.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
+        <jarDirectory url="file://$USER_HOME$/Downloads/JavaPostgresSSHJars" recursive="false" />
       </library>
     </orderEntry>
   </component>

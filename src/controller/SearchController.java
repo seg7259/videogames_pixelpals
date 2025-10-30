@@ -1,9 +1,6 @@
 package controller;
 
-import entity.game;
-import entity.game_runs_on;
-import entity.platforms;
-import entity.user;
+import entity.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -73,7 +70,32 @@ public class SearchController {
                     //insert
                     break;
                 case 4:
-                    //insert
+                    System.out.println("Enter game's Developer: ");
+                    String gameDev = in.nextLine();
+                    List<developer_publisher> ds = new LinkedList<>();
+                    developer_publisher temp3 = null;
+                    ResultSet res10 = smt.executeQuery("select * from developer_publisher where name like '" + gameDev + "%'");
+                    while(res10.next()){
+                        temp3 = new developer_publisher(res10.getString("name"));
+                        temp3.setDevid(Integer.parseInt(res10.getString("devid")));
+                        ds.add(temp3);
+                    }
+                    game te;
+                    List<develops> devids = new LinkedList<>();
+                    for (develops d : devids) {
+                        res3 = smt.executeQuery("select * from develops where devid=" + d.getDevid());
+                        while (res3.next()) {
+                            devids.add(new develops(Integer.parseInt(res3.getString("devid")), Integer.parseInt(res3.getString("gaid"))));
+                        }
+                        for (develops dd : devids) {
+                            res4 = smt.executeQuery("select * from game where gaid=" + dd.gaid());
+                            while (res4.next()) {
+                                te = new game(res4.getString("name"), res4.getString("esrb_rating"));
+                                te.setGaid(Integer.parseInt(res4.getString("gaid")));
+                                games.add(te);
+                            }
+                        }
+                    }
                     break;
                 case 5:
                     //insert
