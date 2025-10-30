@@ -2,7 +2,7 @@ package entity;
 
 public class user {
 
-    /** entity.user id */
+    /** entity.user id. auto increment */
     private int uid;
 
     /** entity.user first name */
@@ -25,7 +25,6 @@ public class user {
 
     /**
      * User object.
-     * @param uid user id
      * @param first_name first name
      * @param last_name last name
      * @param creation_date <-
@@ -33,8 +32,7 @@ public class user {
      * @param username <-
      * @param password users password
      */
-    public user(int uid, String first_name, String last_name, String creation_date, String email_address, String username, String password) {
-        this.uid = uid;
+    public user(String first_name, String last_name, String creation_date, String email_address, String username, String password) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.creation_date = creation_date;
@@ -99,5 +97,13 @@ public class user {
      */
     public int getUid() {
         return uid;
+    }
+
+    /**
+     * Set the uid to the one in the database.
+     * @param uid user id from the database.
+     */
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 }

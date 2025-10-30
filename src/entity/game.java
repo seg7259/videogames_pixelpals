@@ -2,7 +2,7 @@ package entity;
 
 public class game {
 
-    /** game id */
+    /** game id, auto increment so doesn't get set */
     private int gaid;
 
     /** game name */
@@ -13,12 +13,10 @@ public class game {
 
     /**
      * Game object
-     * @param gaid game id
      * @param name game name
      * @param esrb_rating esrb rating of game
      */
-    public game(int gaid, String name, char esrb_rating) {
-        this.gaid = gaid;
+    public game( String name, char esrb_rating) {
         this.name = name;
         this.esrb_rating = esrb_rating;
     }
@@ -46,5 +44,13 @@ public class game {
      */
     public int getGaid() {
         return gaid;
+    }
+
+    /**
+     * Set the game id from the value from the data.
+     * @param gaid set the gaid from auto increment value
+     */
+    public void setGaid(int gaid) {
+        this.gaid = gaid;
     }
 }
