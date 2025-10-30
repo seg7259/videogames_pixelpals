@@ -61,9 +61,10 @@ public class CollectionController {
                 String sqlPlayTime = "SELECT SUM(EXTRACT(EPOCH FROM (end_date_time - start_date_time))) AS total_seconds " +
                         "FROM plays p " +
                         "JOIN collection_has ch ON p.gaid = ch.gaid " +
-                        "WHERE ch.cid = ?";
+                        "WHERE ch.cid = ? AND p.uid = ?";
                 try (PreparedStatement stmt2 = conn.prepareStatement(sqlPlayTime)) {
                     stmt2.setInt(1, collectionId);
+                    stmt2.setInt(2, currentUID);
                     ResultSet resTime = stmt2.executeQuery();
                     if (resTime.next()) {
                         totalSeconds = resTime.getInt("total_seconds");
@@ -133,40 +134,94 @@ public class CollectionController {
 
 
     public boolean doesUserHavePlatform(Connection conn, int gameID, int userID) {
+        String sql = "SELECT 1 " +
+                "FROM user_platform up " +
+                "JOIN game_runs_on gro ON gro.platformid = up.platformid " +
+                "WHERE up.userid = ? AND gro.gaid = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, userID);
+            stmt.setInt(2, gameID);
+            ResultSet res = stmt.executeQuery();
+            return res.next();
+        } catch (SQLException e){
+            System.out.println();
+        }
+
         return false;
     }
 
 
 
-    //TODO: if user does not have game as one of there platforms, give a warning
-    public void addGameFromCollection(Connection conn, int currentUID) {
-        String sqlDelete = "INSERT FROM collection_has WHERE cid = ?";
+    public void addGameToCollection(Connection conn, int currentUID) {
+        String sqlAdd = "INSERT INTO collection_has (cid, gaid) VALUES (?, ?)";
 
         Scanner sc = new Scanner(System.in);
+
         System.out.println();
-        System.out.println("Give the collection ID for the collection you would like to add game from!");
+        System.out.println("Give the collection ID for the collection you would like to add game to!");
+
         int collectionID = Integer.parseInt(sc.nextLine());
+
         if (userHasCollection(conn, collectionID, currentUID)) {
             System.out.println("Give the game ID for the game you would like to add!");
             int gameID = Integer.parseInt(sc.nextLine());
 
-            try (PreparedStatement stmt = conn.prepareStatement(sqlDelete)) {
-                stmt.setInt(1, collectionID);
-                stmt.setInt(2, gameID);
+            //check platform
+            if (!doesUserHavePlatform(conn, gameID, currentUID)) {
+                System.out.println("User does not own the game the platform is on!");
+                System.out.println("Would you like to continue? (Y/N)");
 
-                int rowsAffected = stmt.executeUpdate();
-                if (rowsAffected > 0) {
-                    System.out.println("Game add to collection successfully.");
+                if (sc.nextLine().equalsIgnoreCase("Y")) {
+                    try (PreparedStatement stmt = conn.prepareStatement(sqlAdd)) {
+                        stmt.setInt(1, collectionID);
+                        stmt.setInt(2, gameID);
+
+                        int rowsAffected = stmt.executeUpdate();
+                        if (rowsAffected > 0) {
+                            System.out.println("Game add to collection successfully.");
+                        } else {
+                            System.out.println("Error adding game to collection.");
+                        }
+
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                    }
                 } else {
-                    System.out.println("Error adding game to collection.");
+                    try {
+                        conn.close();
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                 }
-
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
             }
+
         } else {
             System.out.println("User does not have access to this collection.");
         }
+    }
 
+    public void deleteCollection(Connection conn, int currentUID) {
+        String sqlDelete = "DELETE FROM collection WHERE uid = ? AND cid = ?";
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Give the collection ID for the collection you would like to delete!");
+        int collectionID = Integer.parseInt(sc.nextLine());
+
+        if (userHasCollection(conn, collectionID, currentUID)) {
+            try(PreparedStatement stmt = conn.prepareStatement(sqlDelete)){
+                stmt.setInt(1,currentUID);
+                stmt.setInt(2, collectionID);
+                int rowsAffected = stmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Collection deleted from collection successfully.");
+                } else  {
+                    System.out.println("Error removing collection!");
+                }
+            } catch (SQLException e){
+                System.out.println(e.getMessage());
+            }
+        } else {
+            System.out.println("User does not own the collection.");
+        }
     }
 }
