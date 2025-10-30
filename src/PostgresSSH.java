@@ -21,7 +21,7 @@ public class PostgresSSH {
         String user;
         String password;
         try{
-            Ini ini = new Ini(new File("dbInfo.ini"));
+            Ini ini = new Ini(new File("DBUser/dbInfo.ini"));
             user = ini.get("Database", "username");
             password = ini.get("Database", "password");
         } catch(IOException e) {
@@ -54,27 +54,11 @@ public class PostgresSSH {
             props.put("password", password);
 
             Class.forName(driverName);
-            conn = DriverManager.getConnection(url, props);
+            conn = DriverManager.getConnection(url, props.getProperty("user"), props.getProperty("password"));
             System.out.println("Database connection established");
 
-            // temp: figuring out how to actually query db
-            Scanner in = new Scanner(System.in);
-            System.out.print("Enter username: ");
-            String uname = in.nextLine();
-            System.out.println("Hello, " + uname);
-            try(Statement smt = conn.createStatement()) {
-                ResultSet res = smt.executeQuery("select * from users where username='" + uname +"'");
-                while(res.next()){
-                    System.out.println(res.getString("first_name"));
-                    System.out.println(res.getString("last_name"));
-                    System.out.println(res.getString("creation_date"));
-                    System.out.println(res.getString("email_address"));
-                    System.out.println(res.getString("last_access_date"));
-                }
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
+            Login log = new Login();
+            log.login(conn);
 
 
         } catch (Exception e) {
@@ -90,5 +74,6 @@ public class PostgresSSH {
             }
         }
     }
+
 
 }
