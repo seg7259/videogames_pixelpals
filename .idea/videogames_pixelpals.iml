@@ -10,17 +10,25 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="file://$USER_HOME$/Downloads/JavaPostgresSSHJars" />
+          <root url="jar://$USER_HOME$/Downloads/ini4j-0.5.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://$USER_HOME$/Downloads/JavaPostgresSSHJars" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/ini4j-0.5.4.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/jsch-0.1.55.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/postgresql-42.2.24.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
