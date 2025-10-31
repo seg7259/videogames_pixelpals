@@ -24,7 +24,7 @@ public class LoginController {
         boolean u = false;
         ResultSet res;
         Scanner in = new Scanner(System.in);
-        System.out.println("Please enter username: ");
+        System.out.print("Please enter username: ");
         userName = in.nextLine();
         try (Statement smt = conn.createStatement()) {
             res = smt.executeQuery("select * from users where username='" + userName + "'");
@@ -39,7 +39,7 @@ public class LoginController {
                     u = true;
                 }
                 if (u){
-                    System.out.println("Please enter password: ");
+                    System.out.print("Please enter password: ");
                     password = in.nextLine();
                     if(userPassword.equals(password)){
                         System.out.println("Correct password");
@@ -72,7 +72,7 @@ public class LoginController {
         String password = "";
         String first_name = "", last_name = "", email_address = "";
         Scanner in = new Scanner(System.in);
-        System.out.println("Please enter new username: ");
+        System.out.print("Please enter new username: ");
         userName = in.nextLine();
         try (Statement smt = conn.createStatement()) {
             ResultSet res;
@@ -83,7 +83,7 @@ public class LoginController {
             else {
                 boolean notSet = true;
                 while (notSet) {
-                    System.out.println("Enter email address: ");
+                    System.out.print("Enter email address: ");
                     email_address = in.nextLine();
                     if (email_address.length() > 60) {
                         System.out.println("Email address cannot be over 60 characters");
@@ -97,7 +97,7 @@ public class LoginController {
                 } else {
                     notSet = true;
                     while (notSet) {
-                        System.out.println("Enter password: ");
+                        System.out.print("Enter password: ");
                         password = in.nextLine();
                         if (password.length() > 30) {
                             System.out.println("Password cannot be over 30 characters");
@@ -107,7 +107,7 @@ public class LoginController {
                     }
                     notSet = true;
                     while (notSet) {
-                        System.out.println("Enter first name: ");
+                        System.out.print("Enter first name: ");
                         first_name = in.nextLine();
                         if (first_name.length() > 30) {
                             System.out.println("First name cannot be over 30 characters");
@@ -118,7 +118,7 @@ public class LoginController {
 
                     notSet = true;
                     while (notSet) {
-                        System.out.println("Enter last name: ");
+                        System.out.print("Enter last name: ");
                         last_name = in.nextLine();
                         if (last_name.length() > 30) {
                             System.out.println("Last name cannot be over 30 characters");
@@ -147,7 +147,7 @@ public class LoginController {
 
                         try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                             if (generatedKeys.next()) {
-                                System.out.println(generatedKeys.getLong(1));
+                                System.out.println(generatedKeys.getLong(0));
                             } else {
                                 throw new SQLException("Creating user failed, no ID obtained.");
                             }
