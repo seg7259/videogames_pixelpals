@@ -1,6 +1,8 @@
 package entity;
 
-public class game {
+import java.util.Comparator;
+
+public class game implements Comparable<game> {
 
     /** game id, auto increment so doesn't get set */
     private int gaid;
@@ -65,4 +67,13 @@ public class game {
     public void setGaid(int gaid) {
         this.gaid = gaid;
     }
+
+    Comparator<game> byName = (g1, g2) -> CharSequence.compare(g1.getName(), g2.getName());
+
+
+    @Override
+    public int compareTo(game o) {
+        return CharSequence.compare(this.getName(), o.getName());
+    }
 }
+
