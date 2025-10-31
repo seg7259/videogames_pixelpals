@@ -190,11 +190,64 @@ public class SearchController {
     }
 
     public void displayGames(List<game> games, Statement smt, user us) throws SQLException {
+        if(games == null || games.isEmpty()) {
+            System.out.println("No Result");
+            return;
+        }
+
+        System.out.println(OPTIONS);
+        int choice = 2;
+        try {
+            choice = Integer.parseInt(new java.util.Scanner(System.in).nextLine());
+        }catch (NumberFormatException ignored){}
+
+        Map<Integer, Integer> prices = new HashMap<>();
+        Map<Integer, String> genres = new HashMap<>();
+        Map<Integer, Integer> years = new HashMap<>();
+
+        for(game g : games) {
+            try(ResultSet rs = smt.executeQuery("select MIN(price) as price from game_runs_on where gaid=" + g.getGaid())) {
+                if(rs.next()) {
+                    int price =  rs.getInt("price");
+                    prices.put(g.getGaid(), price);
+                }
+            }
+            try(ResultSet rs = smt.executeQuery("select MIN(release_date) as date from  game_runs_on where gaid=" + g.getGaid())) {
+                if(rs.next()) {
+                    java.sql.Date date = rs.getDate("date");
+                    years.put(g.getGaid(), date.toLocalDate().getYear());
+                }
+            }
+            try(ResultSet rs = smt.executeQuery("SELECT MIN(ge.name) AS gname FROM game_genre gg JOIN genre ge ON ge.gid = gg.gid WHERE gg.gaid=" + g.getGaid())) {
+                if(rs.next()) {
+                    String genre = rs.getString("gname");
+                    genres.put(g.getGaid(), genre);
+                }
+            }
+        }
+
+        Comparator<game> byName = Comparator.comparing(game::getName).thenComparingInt(game::getGaid);
+        Comparator<game> byNamedesc = byName.reversed();
+        Comparator<game> price = Comparator.comparing((game g) -> prices.get(g.getGaid())).thenComparing(byName);
+        Comparator<game> genre = Comparator.comparing((game g) -> genres.get(g.getGaid())).thenComparing(byName);
+        Comparator<game> genredesc = genre.reversed();
+        Comparator<game> year = Comparator.comparing((game g) -> years.get(g.getGaid())).thenComparing(byName);
+        Comparator<game> yeardesc = year.reversed();
+        Comparator<game> compare = switch (choice){
+            case 2 -> byName;
+            case 3 -> byNamedesc;
+            case 4 -> price;
+            case 5 -> genre;
+            case 6 -> genredesc;
+            case 7 -> year;
+            case 8 -> yeardesc;
+            default -> byName;
+        };
+        games.sort(compare);
         ResultSet result5;
         HashSet<String> pid = new HashSet<>();
         HashSet<String> devid = new HashSet<>();
         HashSet<String> pevid = new HashSet<>();
-        Collections.sort(games);
         for (game gs : games){
             // GET PLATFORMS
             pid = new HashSet<>();
@@ -253,6 +306,4 @@ public class SearchController {
             System.out.println();
         }
     }
-
-
 }

@@ -59,13 +59,13 @@ public class PostgresSSH {
             conn = DriverManager.getConnection(url, props.getProperty("user"), props.getProperty("password"));
             System.out.println("Database connection established");
 
-//            SearchController search = new SearchController();
-//            user u = new user(1,"Bella", null, null, null, null, null);
-//            search.searchGame(conn, u);
-//            LoginController log = new LoginController();
-//            user users = log.login(conn);
-            ApplicationController app = new ApplicationController(conn);
-            app.run();
+            SearchController search = new SearchController();
+            user u = new user(1,"Bella", null, null, null, null, null);
+            search.searchGame(conn, u);
+ //           LoginController log = new LoginController();
+///            user users = log.login(conn);
+///            ApplicationController app = new ApplicationController(conn);
+///            app.run();
 
 
 
