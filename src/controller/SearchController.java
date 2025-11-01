@@ -6,7 +6,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class SearchController {
@@ -174,12 +176,6 @@ public class SearchController {
                     break;
             }
             displayGames(games, smt, us);
-            System.out.println(OPTIONS);
-            ans = Integer.parseInt(in.nextLine());
-            switch (ans) {
-                case 1:
-
-            }
 
 
         } catch (SQLException ex) {
@@ -289,9 +285,16 @@ public class SearchController {
             // GET PLAYTIME
             pid = new HashSet<>();
             System.out.print("Play Time: ");
-            result5 = smt.executeQuery("select start_date_time from plays where gaid=" + gs.getGaid() + " and uid=" + us.getUid());
+            result5 = smt.executeQuery("select * from plays where gaid=" + gs.getGaid() + " and uid=" + us.getUid());
             while(result5.next()){
-                System.out.println(result5.getString("start_date_time"));
+                LocalDateTime d1 = LocalDateTime.parse(result5.getString("start_date_time"));
+                LocalDateTime d2 = LocalDateTime.parse(result5.getString("end_date_time"));
+                Duration duration = Duration.between(d1, d2);
+
+                System.out.println("Duration: " + duration);
+                System.out.println("Hours: " + duration.toHours());
+                System.out.println("Minutes: " + duration.toMinutes());
+
             } // END GET PLAYTIME
 
             // GET RATING
