@@ -22,29 +22,27 @@ public class ApplicationController {
         this.conn = conn;
         this.in = new Scanner(System.in);
         this.login = new LoginController();
+        this.users = login();
+
         this.coll = new CollectionController();
-        this.follow = new FollowController(conn);
+        this.follow = new FollowController(conn, users);
         this.play = new PlayController(conn, users);
         this.rate = new RatesController();
         this.search = new SearchController();
     }
-    public void run(){
-        login();
-        app();
-    }
 
-    private void login(){
+    private user login(){
         for(;;) {
             System.out.print("Would you like to sign in (1) or create an account (2)?: ");
             int input = Integer.parseInt(in.nextLine());
             switch (input) {
                 case 1:
                     this.users = login.login(conn);
-                    if(this.users != null) return;
+                    if(this.users != null) return this.users;
                     break;
                 case 2:
                     this.users = login.createUser(conn);
-                    if(this.users != null) return;
+                    if(this.users != null) return this.users;
                     break;
                 default:
                     System.out.print("Invalid option, please select again: ");
@@ -67,7 +65,7 @@ public class ApplicationController {
                 \t11: Unfollow User
                 \t99: Log Out and Exit Application""");
     }
-    private void app(){
+    public void run(){
         System.out.println("Welcome, " + users.getFirst_name() + "!");
         printMenu();
         for(;;) {
@@ -95,9 +93,15 @@ public class ApplicationController {
                         System.out.println("Rating failed, please try again");
                     }
                     break;
-                case 9: play.play();
-                case 10: break; // todo ask for ids and stuff
-                case 11: break; // todo same ^
+                case 9: play.play(); break;
+                case 10:
+                    follow.findUser();
+                    follow.followUser();
+                    break;
+                case 11:
+                    follow.findUser();
+                    follow.unfollowUser();
+                    break;
                 case 99: return;
                 default:
                     System.out.println("Invalid selection");
