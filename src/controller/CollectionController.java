@@ -23,7 +23,7 @@ public class CollectionController {
             stmt.executeUpdate();
             try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    int generatedId = rs.getInt(1);
+                    int generatedId = rs.getInt(2);
                     newCollection.setCid(generatedId);
                 }
             }

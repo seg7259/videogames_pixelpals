@@ -147,7 +147,7 @@ public class LoginController {
 
                         try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                             if (generatedKeys.next()) {
-                                System.out.println(generatedKeys.getLong(0));
+//                                System.out.println(generatedKeys.getLong(8));
                             } else {
                                 throw new SQLException("Creating user failed, no ID obtained.");
                             }

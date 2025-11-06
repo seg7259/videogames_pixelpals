@@ -2,10 +2,7 @@ package controller;
 
 import entity.*;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -287,11 +284,11 @@ public class SearchController {
             System.out.print("Play Time: ");
             result5 = smt.executeQuery("select * from plays where gaid=" + gs.getGaid() + " and uid=" + us.getUid());
             while(result5.next()){
-                LocalDateTime d1 = LocalDateTime.parse(result5.getString("start_date_time"));
-                LocalDateTime d2 = LocalDateTime.parse(result5.getString("end_date_time"));
-                Duration duration = Duration.between(d1, d2);
+                Timestamp d1 = result5.getTimestamp("start_date_time");
+                Timestamp d2 = result5.getTimestamp("end_date_time");
+                Duration duration = Duration.between(d1.toInstant(), d2.toInstant());
 
-                System.out.println("Duration: " + duration);
+                System.out.println("Duration: ");
                 System.out.println("Hours: " + duration.toHours());
                 System.out.println("Minutes: " + duration.toMinutes());
 
