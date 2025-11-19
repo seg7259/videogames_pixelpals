@@ -17,6 +17,7 @@ public class ApplicationController {
     private PlayController play;
     private RatesController rate;
     private SearchController search;
+    private StatsController stats;
 
     public ApplicationController(Connection conn){
         this.conn = conn;
@@ -29,6 +30,7 @@ public class ApplicationController {
         this.play = new PlayController(conn, users);
         this.rate = new RatesController();
         this.search = new SearchController();
+        this.stats = new StatsController();
     }
 
     private user login(){
@@ -63,6 +65,7 @@ public class ApplicationController {
                 \t9: Play a Game
                 \t10: Follow User
                 \t11: Unfollow User
+                \t12: Find top games
                 \t99: Log Out and Exit Application""");
     }
     public void run(){
@@ -101,6 +104,9 @@ public class ApplicationController {
                 case 11:
                     follow.findUser();
                     follow.unfollowUser();
+                    break;
+                case 12:
+                    stats.findTopGames(conn, users);
                     break;
                 case 99: return;
                 default:
