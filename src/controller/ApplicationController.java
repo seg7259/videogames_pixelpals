@@ -18,6 +18,8 @@ public class ApplicationController {
     private RatesController rate;
     private SearchController search;
     private StatsController stats;
+    private RecommendController recommend;
+    private UserController userstats;
 
     public ApplicationController(Connection conn){
         this.conn = conn;
@@ -31,6 +33,8 @@ public class ApplicationController {
         this.rate = new RatesController();
         this.search = new SearchController();
         this.stats = new StatsController();
+        this.recommend = new RecommendController();
+        this.userstats = new UserController(conn, users);
     }
 
     private user login(){
@@ -66,6 +70,11 @@ public class ApplicationController {
                 \t10: Follow User
                 \t11: Unfollow User
                 \t12: Find top games
+                \t13: Get game recommendations
+                \t14: Get your collections
+                \t15: How many people are following you
+                \t16: How many people you are following
+                \t17: Top 10 games by ratings
                 \t99: Log Out and Exit Application""");
     }
     public void run(){
@@ -107,6 +116,21 @@ public class ApplicationController {
                     break;
                 case 12:
                     stats.findTopGames(conn, users);
+                    break;
+                case 13:
+                    recommend.recommendGames(conn, users);
+                    break;
+                case 14:
+                    userstats.getUsercollections();
+                    break;
+                case 15:
+                    userstats.getUserfollowee();
+                    break;
+                case 16:
+                    userstats.getUserfollowings();
+                    break;
+                case 17:
+                    userstats.top10();
                     break;
                 case 99: return;
                 default:
