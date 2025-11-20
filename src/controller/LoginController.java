@@ -7,6 +7,9 @@ import java.util.Scanner;
 
 import entity.user;
 
+import static java.util.Objects.hash;
+//Bm00001!#40
+
 public class LoginController {
     String errorMsg;
     user userr;
@@ -41,7 +44,9 @@ public class LoginController {
                 if (u){
                     System.out.print("Please enter password: ");
                     password = in.nextLine();
-                    if(userPassword.equals(password)){
+                    String sv = getSaltedValue(password, creation_date);
+                    int hashValue = hashPassword(sv);
+                    if(String.valueOf(hashValue).equals(userPassword)){
                         System.out.println("Correct password");
                         userr = new user(uid, first_name, last_name, creation_date, email_address, userName, userPassword);
                     }
@@ -104,6 +109,8 @@ public class LoginController {
                         } else {
                             notSet = false;
                         }
+                        password = getSaltedValue(password, String.valueOf(creation_date));
+                        password = String.valueOf(hashPassword(password));
                     }
                     notSet = true;
                     while (notSet) {
@@ -167,5 +174,11 @@ public class LoginController {
         }
 
         return userr;
+    }
+    public int hashPassword(String saltedPassword){
+        return hash(saltedPassword);
+    }
+    public String getSaltedValue(String password, String date){
+        return password + date;
     }
 }
